@@ -20,3 +20,6 @@ class UserLoginSerializer(ModelSerializer):
     class Meta:
         model = User
         fields = ['login_id', 'password']
+        extra_kwargs = {
+            'login_id': {'validators': []},
+        }
