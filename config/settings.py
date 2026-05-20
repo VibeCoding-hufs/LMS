@@ -129,6 +129,4 @@ STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # CORS
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173", "https://fe-lms-sooty.vercel.app",
-]
+CORS_ALLOWED_ORIGINS = True
