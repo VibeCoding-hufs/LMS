@@ -52,6 +52,8 @@ jobs:
                         --workers 3 \
                         --bind 0.0.0.0:8000 \
                         --pid /tmp/gunicorn-lms.pid \
+                        --access-logfile /tmp/gunicorn-access.log \
+                        --error-logfile /tmp/gunicorn-error.log \
                         config.wsgi:application \
                         > /dev/null 2>&1 &
 
