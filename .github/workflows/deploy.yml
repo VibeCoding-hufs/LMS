@@ -1,0 +1,58 @@
+name: Deploy to Server3
+
+on:
+    push:
+        branches: [master]
+
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Deploy via SSH
+              uses: appleboy/ssh-action@v1.2.0
+              with:
+                  host: ${{ secrets.SSH_HOST }}
+                  username: ${{ secrets.SSH_USER }}
+                  key: ${{ secrets.SSH_PRIVATE_KEY }}
+                  port: 22
+                  script: |
+                      set -e
+
+                      DEPLOY_DIR="$HOME/LMS"
+                      VENV_DIR="$DEPLOY_DIR/venv"
+
+                      # 코드 최신화
+                      cd $DEPLOY_DIR
+                      git pull origin master
+
+                      # 가상환경 없으면 생성 (pip 바이너리 존재 여부로 확인)
+                      if [ ! -f "$VENV_DIR/bin/pip" ]; then
+                        python3 -m venv $VENV_DIR
+                      fi
+
+                      # 의존성 설치
+                      $VENV_DIR/bin/pip install -q --upgrade pip
+                      $VENV_DIR/bin/pip install -q -r requirements.txt
+
+                      # DB 마이그레이션
+                      $VENV_DIR/bin/python manage.py migrate --noinput
+
+                      # 정적 파일 수집
+                      $VENV_DIR/bin/python manage.py collectstatic --noinput
+
+                      # 기존 gunicorn 종료
+                      if [ -f /tmp/gunicorn-lms.pid ]; then
+                        kill $(cat /tmp/gunicorn-lms.pid) || true
+                        sleep 1
+                      fi
+
+                      # gunicorn 재시작 (백그라운드)
+                      nohup $VENV_DIR/bin/gunicorn \
+                        --workers 3 \
+                        --bind 0.0.0.0:8000 \
+                        --pid /tmp/gunicorn-lms.pid \
+                        config.wsgi:application \
+                        > /dev/null 2>&1 &
+
+                      echo "Deploy complete"
