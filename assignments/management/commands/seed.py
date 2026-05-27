@@ -2,6 +2,7 @@ from django.core.management.base import BaseCommand
 from accounts.models import User
 from courses.models import Courses, Enrollment
 from assignments.models import Assignments
+from notices.models import Notice
 
 
 class Command(BaseCommand):
@@ -49,5 +50,19 @@ class Command(BaseCommand):
                 )
         Assignments.objects.bulk_create(assignments)
         self.stdout.write(f'  Assignments 생성: {Assignments.objects.count()}개')
+
+        # Notices (과목별 3개씩)
+        notices = []
+        for course in courses:
+            for i in range(1, 4):
+                notices.append(
+                    Notice(
+                        course=course,
+                        title=f'[{course.name}] 공지사항 {i}번',
+                        description=f'{course.name} {i}번째 공지사항입니다. 확인 후 숙지 바랍니다.',
+                    )
+                )
+        Notice.objects.bulk_create(notices)
+        self.stdout.write(f'  Notices 생성: {Notice.objects.count()}개')
 
         self.stdout.write(self.style.SUCCESS('더미 데이터 생성 완료!'))
