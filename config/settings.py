@@ -44,9 +44,7 @@ INSTALLED_APPS = [
     # LMS apps
     'accounts',
     'courses',
-    'assignments',
-    'teams',
-    'contents',
+    'notices',
 ]
 
 MIDDLEWARE = [

@@ -25,11 +25,11 @@ LMS/
 
 ## 도메인별 테이블
 
-| 앱       | 테이블                                     |
-| -------- | ------------------------------------------ |
-| accounts | Users, Departments                         |
-| courses  | Courses, Subjects, Enrollments, Syllabuses |
-| contents | CourseContents                             |
+| 앱       | 테이블                         |
+| -------- | ------------------------------ |
+| accounts | Users                          |
+| courses  | Courses, Subjects, Enrollments |
+| notice   | Notices                        |
 
 ## 시작하기
 
