@@ -25,13 +25,11 @@ LMS/
 
 ## 도메인별 테이블
 
-| 앱 | 테이블 |
-|----|--------|
-| accounts | Users, Departments |
-| courses | Courses, Subjects, Enrollments, Syllabuses |
-| assignments | Assignments, Submissions |
-| teams | TeamProjects, Teams, TeamMembers, TeamSubmissions |
-| contents | CourseContents |
+| 앱       | 테이블                         |
+| -------- | ------------------------------ |
+| accounts | Users                          |
+| courses  | Courses, Subjects, Enrollments |
+| notice   | Notices                        |
 
 ## 시작하기
 
@@ -69,8 +67,8 @@ python manage.py runserver
 
 ## 팀원
 
-| 이름 | GitHub |
-|------|--------|
-| 이정현 | [@victorlee02](https://github.com/victorlee02) |
+| 이름   | GitHub                                             |
+| ------ | -------------------------------------------------- |
+| 이정현 | [@victorlee02](https://github.com/victorlee02)     |
 | 김대환 | [@kdh635899-ops](https://github.com/kdh635899-ops) |
-| 이현정 | [@GNAchoux](https://github.com/GNAchoux) |
+| 이현정 | [@GNAchoux](https://github.com/GNAchoux)           |
