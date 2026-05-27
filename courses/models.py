@@ -1,10 +1,9 @@
 from django.db import models
 
-# Create your models here.
+
 class Courses(models.Model):
-    name = models.CharField(100)
-    credits = models.DecimalField(max_digits=4, decimal_places=1)
+    name = models.CharField(max_length=100)
+    credits = models.IntegerField()
 
     def __str__(self):
         return self.name
-    

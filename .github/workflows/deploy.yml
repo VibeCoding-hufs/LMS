@@ -38,6 +38,12 @@ jobs:
                       # DB 마이그레이션
                       $VENV_DIR/bin/python manage.py migrate --noinput
 
+                      # 더미 데이터 (최초 1회만)
+                      USER_COUNT=$($VENV_DIR/bin/python manage.py shell -c "from accounts.models import User; print(User.objects.count())")
+                      if [ "$USER_COUNT" = "0" ]; then
+                        $VENV_DIR/bin/python manage.py seed
+                      fi
+
                       # 정적 파일 수집
                       $VENV_DIR/bin/python manage.py collectstatic --noinput
 
