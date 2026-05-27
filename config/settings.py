@@ -40,11 +40,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'rest_framework',
+    'drf_spectacular',
 
     # LMS apps
     'accounts',
     'courses',
     'notices',
+    'assignments',
 ]
 
 MIDDLEWARE = [
@@ -125,6 +127,16 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'HelloLMS API',
+    'DESCRIPTION': 'HelloLMS API 문서',
+    'VERSION': '1.0.0',
+}
 
 # CORS
 CORS_ALLOWED_ORIGINS = [
