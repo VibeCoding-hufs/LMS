@@ -35,14 +35,12 @@ jobs:
                       $VENV_DIR/bin/pip install -q --upgrade pip
                       $VENV_DIR/bin/pip install -q -r requirements.txt
 
-                      # DB 마이그레이션
+                      # DB 초기화 후 마이그레이션
+                      rm -f $DEPLOY_DIR/db.sqlite3
                       $VENV_DIR/bin/python manage.py migrate --noinput
 
-                      # 더미 데이터 (최초 1회만)
-                      USER_COUNT=$($VENV_DIR/bin/python manage.py shell -c "from accounts.models import User; print(User.objects.count())")
-                      if [ "$USER_COUNT" = "0" ]; then
-                        $VENV_DIR/bin/python manage.py seed
-                      fi
+                      # 더미 데이터 seed
+                      $VENV_DIR/bin/python manage.py seed
 
                       # 정적 파일 수집
                       $VENV_DIR/bin/python manage.py collectstatic --noinput
